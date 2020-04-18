@@ -8,13 +8,21 @@
  */ 
 
 #include <avr/io.h>
+#include "lauflicht.h"
+
+void init() {
+	// set pins PB0-PB5 as output
+	DDRB = 0b00111111;
+}
+
 
 
 int main(void)
 {
-    /* Replace with your application code */
-    while (1) 
-    {
+	init();
+	
+    while(1){
+		lauflicht(0,5);
     }
 }
 
