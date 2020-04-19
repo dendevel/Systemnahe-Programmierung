@@ -22,7 +22,7 @@ int main(void)
 {
 	init();	
     while(1){
-		lauflicht(0,7);
+		lightStep(0,9);
     }
 }
 
