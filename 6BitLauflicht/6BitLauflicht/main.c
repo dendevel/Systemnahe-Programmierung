@@ -13,16 +13,16 @@
 void init() {
 	// set pins PB0-PB5 as output
 	DDRB = 0b00111111;
+	// set pins PC0-PC5 as output
+	DDRC = 0b00111111;
+	
 }
-
-
 
 int main(void)
 {
-	init();
-	
+	init();	
     while(1){
-		lauflicht(0,5);
+		lauflicht(0,7);
     }
 }
 

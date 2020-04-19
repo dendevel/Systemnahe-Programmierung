@@ -19,5 +19,7 @@
 
 /* function prototypes */
 extern void lauflicht(int,int);
+extern void setPin(int);
+
 
 #endif /* LAUFLICHT_H_ */
