@@ -1,5 +1,5 @@
 /*
- * 6BitLauflicht.c
+ * Lauflicht.c
  *
  * Created: 17.04.2020 12:45:59
  * Author : Denis Dengler, Maximilian Kürschner, David Schader
