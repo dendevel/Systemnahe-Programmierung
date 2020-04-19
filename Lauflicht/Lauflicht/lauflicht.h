@@ -18,7 +18,7 @@
 #define INTERVAL 1000
 
 /* function prototypes */
-extern void lauflicht(int,int);
+extern void lightStep(int,int);
 extern void setPin(int);
 
 

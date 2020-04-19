@@ -2,7 +2,7 @@
  * lauflicht.c
  *
  * Created: 17.04.2020 13:43:02
- *  Author: Denis Dengler, Maximilian Kürschner, David Schader
+ * Author: Denis Dengler, Maximilian Kürschner, David Schader
  */ 
 
 #include "lauflicht.h"
@@ -24,9 +24,10 @@ void setPin(int pinIndex){
 //LEDs
 //1-6 on PortB
 //7-10 on PortC
-void lauflicht(int min, int max){
+void lightStep(int min, int max){
 	static int dir = 1;
 	static int pin = 0;
+	
 	//set light direction
 	//if maximum or minimum reached, change direction, else keep 
 	dir = ((pin == max && dir > 0) || (pin == min && dir < 0)) ? -dir : dir;
