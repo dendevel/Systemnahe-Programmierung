@@ -13,7 +13,7 @@ void pulseStep(int min, int max){
 	static int brightness = 0;	
 	
 	direction = ((brightness == max && direction > 0) || (brightness == min && direction < 0)) ? -direction : direction;
-	OCR1A = brightness;
+	OCR0A = brightness;
 	_delay_ms(10);
 	brightness += direction;
 }
