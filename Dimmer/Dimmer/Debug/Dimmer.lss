@@ -3,31 +3,31 @@ Dimmer.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000002  00800100  00000166  000001fa  2**0
+  0 .data         00000002  00800100  00000150  000001e4  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000166  00000000  00000000  00000094  2**1
+  1 .text         00000150  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000002  00800102  00800102  000001fc  2**0
+  2 .bss          00000002  00800102  00800102  000001e6  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000001fc  2**0
+  3 .comment      00000030  00000000  00000000  000001e6  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000022c  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000218  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000048  00000000  00000000  0000026c  2**0
+  5 .debug_aranges 00000048  00000000  00000000  00000258  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000081e  00000000  00000000  000002b4  2**0
+  6 .debug_info   00000813  00000000  00000000  000002a0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000072a  00000000  00000000  00000ad2  2**0
+  7 .debug_abbrev 0000072a  00000000  00000000  00000ab3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000383  00000000  00000000  000011fc  2**0
+  8 .debug_line   00000383  00000000  00000000  000011dd  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000058  00000000  00000000  00001580  2**2
+  9 .debug_frame  00000058  00000000  00000000  00001560  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000003c4  00000000  00000000  000015d8  2**0
+ 10 .debug_str    000003bf  00000000  00000000  000015b8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000006e  00000000  00000000  0000199c  2**0
+ 11 .debug_loc    0000006e  00000000  00000000  00001977  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000028  00000000  00000000  00001a0a  2**0
+ 12 .debug_ranges 00000028  00000000  00000000  000019e5  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -72,7 +72,7 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e6 e6       	ldi	r30, 0x66	; 102
+  7a:	e0 e5       	ldi	r30, 0x50	; 80
   7c:	f1 e0       	ldi	r31, 0x01	; 1
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
@@ -94,15 +94,15 @@ Disassembly of section .text:
   94:	a4 30       	cpi	r26, 0x04	; 4
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 a8 00 	call	0x150	; 0x150 <main>
-  9e:	0c 94 b1 00 	jmp	0x162	; 0x162 <_exit>
+  9a:	0e 94 9d 00 	call	0x13a	; 0x13a <main>
+  9e:	0c 94 a6 00 	jmp	0x14c	; 0x14c <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-000000a6 <pulse>:
-
-void pulse(int min, int max){
+000000a6 <pulseStep>:
+/* increasing and decreasing brightness of led between min and max value depending on direction */
+void pulseStep(int min, int max){
 	static int direction = 1;
 	static int brightness = 0;	
 	
@@ -111,116 +111,109 @@ void pulse(int min, int max){
   aa:	30 91 03 01 	lds	r19, 0x0103	; 0x800103 <__data_end+0x1>
   ae:	26 17       	cp	r18, r22
   b0:	37 07       	cpc	r19, r23
-  b2:	39 f4       	brne	.+14     	; 0xc2 <pulse+0x1c>
+  b2:	39 f4       	brne	.+14     	; 0xc2 <pulseStep+0x1c>
   b4:	40 91 00 01 	lds	r20, 0x0100	; 0x800100 <__data_start>
   b8:	50 91 01 01 	lds	r21, 0x0101	; 0x800101 <__data_start+0x1>
   bc:	14 16       	cp	r1, r20
   be:	15 06       	cpc	r1, r21
-  c0:	4c f0       	brlt	.+18     	; 0xd4 <pulse+0x2e>
+  c0:	4c f0       	brlt	.+18     	; 0xd4 <pulseStep+0x2e>
   c2:	28 17       	cp	r18, r24
   c4:	39 07       	cpc	r19, r25
-  c6:	71 f4       	brne	.+28     	; 0xe4 <pulse+0x3e>
+  c6:	71 f4       	brne	.+28     	; 0xe4 <pulseStep+0x3e>
   c8:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
   cc:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_start+0x1>
   d0:	99 23       	and	r25, r25
-  d2:	44 f4       	brge	.+16     	; 0xe4 <pulse+0x3e>
+  d2:	44 f4       	brge	.+16     	; 0xe4 <pulseStep+0x3e>
   d4:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
   d8:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_start+0x1>
   dc:	91 95       	neg	r25
   de:	81 95       	neg	r24
   e0:	91 09       	sbc	r25, r1
-  e2:	04 c0       	rjmp	.+8      	; 0xec <pulse+0x46>
+  e2:	04 c0       	rjmp	.+8      	; 0xec <pulseStep+0x46>
   e4:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
   e8:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_start+0x1>
   ec:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_start+0x1>
   f0:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
-	OCR1A = brightness;
-  f4:	30 93 89 00 	sts	0x0089, r19	; 0x800089 <__DATA_REGION_ORIGIN__+0x29>
-  f8:	20 93 88 00 	sts	0x0088, r18	; 0x800088 <__DATA_REGION_ORIGIN__+0x28>
+	OCR0A = brightness;
+  f4:	27 bd       	out	0x27, r18	; 39
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  fc:	8f e3       	ldi	r24, 0x3F	; 63
-  fe:	9c e9       	ldi	r25, 0x9C	; 156
- 100:	01 97       	sbiw	r24, 0x01	; 1
- 102:	f1 f7       	brne	.-4      	; 0x100 <pulse+0x5a>
- 104:	00 c0       	rjmp	.+0      	; 0x106 <pulse+0x60>
- 106:	00 00       	nop
+  f6:	8f e3       	ldi	r24, 0x3F	; 63
+  f8:	9c e9       	ldi	r25, 0x9C	; 156
+  fa:	01 97       	sbiw	r24, 0x01	; 1
+  fc:	f1 f7       	brne	.-4      	; 0xfa <pulseStep+0x54>
+  fe:	00 c0       	rjmp	.+0      	; 0x100 <pulseStep+0x5a>
+ 100:	00 00       	nop
 	_delay_ms(10);
 	brightness += direction;
- 108:	20 91 02 01 	lds	r18, 0x0102	; 0x800102 <__data_end>
- 10c:	30 91 03 01 	lds	r19, 0x0103	; 0x800103 <__data_end+0x1>
- 110:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
- 114:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_start+0x1>
- 118:	82 0f       	add	r24, r18
- 11a:	93 1f       	adc	r25, r19
- 11c:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <__data_end+0x1>
- 120:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <__data_end>
- 124:	08 95       	ret
+ 102:	20 91 02 01 	lds	r18, 0x0102	; 0x800102 <__data_end>
+ 106:	30 91 03 01 	lds	r19, 0x0103	; 0x800103 <__data_end+0x1>
+ 10a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+ 10e:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_start+0x1>
+ 112:	82 0f       	add	r24, r18
+ 114:	93 1f       	adc	r25, r19
+ 116:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <__data_end+0x1>
+ 11a:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <__data_end>
+ 11e:	08 95       	ret
 
-00000126 <init>:
+00000120 <init>:
 #include <avr/io.h>
 #include "dimmer.h"
 
 void init(void){
-	// PB1 is now an output
-	DDRB |= (1 << DDB1);
- 126:	21 9a       	sbi	0x04, 1	; 4
+	// PD6 is now an output
+	DDRD |= (1 << DDD6);
+ 120:	56 9a       	sbi	0x0a, 6	; 10
 
 	// set PWM for 100% duty cycle
-	OCR1A = 255;
- 128:	8f ef       	ldi	r24, 0xFF	; 255
- 12a:	90 e0       	ldi	r25, 0x00	; 0
- 12c:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__DATA_REGION_ORIGIN__+0x29>
- 130:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__DATA_REGION_ORIGIN__+0x28>
+	OCR0A = 64;
+ 122:	80 e4       	ldi	r24, 0x40	; 64
+ 124:	87 bd       	out	0x27, r24	; 39
 
 	// set none-inverting mode
-	TCCR1A |= (1 << COM0A1);
- 134:	e0 e8       	ldi	r30, 0x80	; 128
- 136:	f0 e0       	ldi	r31, 0x00	; 0
- 138:	80 81       	ld	r24, Z
- 13a:	80 68       	ori	r24, 0x80	; 128
- 13c:	80 83       	st	Z, r24
+	TCCR0A |= (1 << COM0A1);
+ 126:	84 b5       	in	r24, 0x24	; 36
+ 128:	80 68       	ori	r24, 0x80	; 128
+ 12a:	84 bd       	out	0x24, r24	; 36
 
-	// set fast PWM Mode
-	TCCR1A |= (1 << WGM01) | (1 << WGM00) | (1 << WGM02);
- 13e:	80 81       	ld	r24, Z
- 140:	8b 60       	ori	r24, 0x0B	; 11
- 142:	80 83       	st	Z, r24
+	// set fast PWM Mode, TOP=0xFF
+	TCCR0A |= (1 << WGM01) | (1 << WGM00);
+ 12c:	84 b5       	in	r24, 0x24	; 36
+ 12e:	83 60       	ori	r24, 0x03	; 3
+ 130:	84 bd       	out	0x24, r24	; 36
 
-	// set prescaler to 8 and starts PWM
-	TCCR1B |= (1 << CS01);
- 144:	e1 e8       	ldi	r30, 0x81	; 129
- 146:	f0 e0       	ldi	r31, 0x00	; 0
- 148:	80 81       	ld	r24, Z
- 14a:	82 60       	ori	r24, 0x02	; 2
- 14c:	80 83       	st	Z, r24
- 14e:	08 95       	ret
+	// set prescaler to 8 and start PWM
+	TCCR0B |= (1 << CS01);
+ 132:	85 b5       	in	r24, 0x25	; 37
+ 134:	82 60       	ori	r24, 0x02	; 2
+ 136:	85 bd       	out	0x25, r24	; 37
+ 138:	08 95       	ret
 
-00000150 <main>:
+0000013a <main>:
 }
 
 
 int main(void)
 {
 	init();
- 150:	0e 94 93 00 	call	0x126	; 0x126 <init>
+ 13a:	0e 94 90 00 	call	0x120	; 0x120 <init>
 	
 	while (1)
 	{
-		pulse(0,255);
- 154:	6f ef       	ldi	r22, 0xFF	; 255
- 156:	70 e0       	ldi	r23, 0x00	; 0
- 158:	80 e0       	ldi	r24, 0x00	; 0
- 15a:	90 e0       	ldi	r25, 0x00	; 0
- 15c:	0e 94 53 00 	call	0xa6	; 0xa6 <pulse>
- 160:	f9 cf       	rjmp	.-14     	; 0x154 <main+0x4>
+		pulseStep(0,64);
+ 13e:	60 e4       	ldi	r22, 0x40	; 64
+ 140:	70 e0       	ldi	r23, 0x00	; 0
+ 142:	80 e0       	ldi	r24, 0x00	; 0
+ 144:	90 e0       	ldi	r25, 0x00	; 0
+ 146:	0e 94 53 00 	call	0xa6	; 0xa6 <pulseStep>
+ 14a:	f9 cf       	rjmp	.-14     	; 0x13e <main+0x4>
 
-00000162 <_exit>:
- 162:	f8 94       	cli
+0000014c <_exit>:
+ 14c:	f8 94       	cli
 
-00000164 <__stop_program>:
- 164:	ff cf       	rjmp	.-2      	; 0x164 <__stop_program>
+0000014e <__stop_program>:
+ 14e:	ff cf       	rjmp	.-2      	; 0x14e <__stop_program>
