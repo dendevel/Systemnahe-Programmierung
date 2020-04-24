@@ -1,0 +1,4 @@
+OCRnx = f_cpu/(2*prescaler_value*f_ton)
+
+OCRnx = 16.000.000Hz/(2*1024*440Hz)
+OCRnx = 17,75
