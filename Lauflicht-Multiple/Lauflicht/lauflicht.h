@@ -19,7 +19,6 @@
 
 /* function prototypes */
 extern void lightStep(int,int,int);
-extern void setPin(int);
 
 
 #endif /* LAUFLICHT_H_ */
