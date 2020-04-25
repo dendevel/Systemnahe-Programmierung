@@ -2,17 +2,18 @@
  * serial.c
  *
  * Created: 25.04.2020 10:57:01
- *  Author: dengl
+ *  Author: Denis Dengler, Maximilian Kürschner, David Schader
  */ 
+
 #include "serial.h"
 
-typedef void (*func)(void);
-
-func f;
+func func_ptr;
 
 void usart_init(func function){
+	//set function pointer
+	func_ptr = function;
+	
 	/*Set baud rate */
-	f = function;
 	UBRR0H = (MYUBRR >> 8);
 	UBRR0L = MYUBRR;
 		
@@ -22,9 +23,11 @@ void usart_init(func function){
 
 	sei();                                      // Lets not forget to enable interrupts =P
 }
+
 void usart_send(uint8_t toSend){
-	 while ( !(UCSR0A & (1 << UDRE0)) ){}
-		UDR0 = toSend;                       // Write the data to the TX buffer
+	//wait for empty buffer
+	while ( !(UCSR0A & (1 << UDRE0)) ){}
+	UDR0 = toSend;                       	    // Write the data to the TX buffer
 }
 
 void usart_send_string(char *data){
@@ -32,11 +35,13 @@ void usart_send_string(char *data){
 		usart_send(*data++);
 	}
 }
+
 uint8_t usart_receive(){
+	//wait until data is received
 	while ( !(UCSR0A & (1 << RXC0)) ){}
 	return (uint8_t)UDR0;                       // Read data from the RX buffer
 }
 
 ISR (USART_RX_vect){
-	f();
+	func_ptr();
 }
