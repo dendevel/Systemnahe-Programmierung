@@ -6,7 +6,7 @@
  */ 
 #include "serial.h"
 
-typedef void (*func)()
+typedef void (*func)(void);
 
 func f;
 
