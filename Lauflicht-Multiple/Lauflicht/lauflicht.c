@@ -25,7 +25,7 @@ void setPin(int pinIndex){
 //activate pin on specific port
 //first 6 pins on PortB (index <= 5)
 //next 6 pins on PortC (index >= 6)
-void orPin(int pinIndex){
+void addPin(int pinIndex){
 	if(pinIndex >= 0 && pinIndex <= 5){
 		PORTB |= (1 << pinIndex);
 	}
@@ -34,12 +34,12 @@ void orPin(int pinIndex){
 	}
 }
 
-void setMultiplePins(int pinIndex, int leds){
+void setMultiplePins(int pinIndex, int ledCount){
 	setPin(pinIndex);
 	int pin = 1;
-	while (pin != leds)
+	while (pin != ledCount)
 	{	
-		orPin(pinIndex + pin);	
+		addPin(pinIndex + pin);	
 		pin += 1;
 	}
 }
@@ -47,17 +47,17 @@ void setMultiplePins(int pinIndex, int leds){
 //LEDs
 //1-6 on PortB
 //7-10 on PortC
-void lightStep(int min, int max, int leds){
+void lightStep(int min, int max, int ledCount){
 	static int dir = 1;
 	static int pin = 0;
 	
 	//get the max determined by amount of leds
-	max = max - (leds - 1);
+	max = max - (ledCount - 1);
 	
 	//set light direction
 	//if maximum or minimum reached, change direction, else keep 
 	dir = ((pin == max && dir > 0) || (pin == min && dir < 0)) ? -dir : dir;
-	setMultiplePins(pin, leds);
+	setMultiplePins(pin, ledCount);
 	_delay_ms(INTERVAL);
 	pin += dir;
 }
