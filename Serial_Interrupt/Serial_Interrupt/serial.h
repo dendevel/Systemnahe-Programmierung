@@ -17,6 +17,8 @@
 #define BAUD 9600
 #define MYUBRR FOSC/16/BAUD -1          //Transmitting Speed
 
+//typedef for function pointer
+typedef void (*func)(void);
 
 /* function prototypes */
 void usart_init(void (*fun)());
