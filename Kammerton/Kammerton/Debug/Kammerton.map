@@ -7,6 +7,9 @@ Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .text          0x00000000        0x0 kammerton.o
+ .data          0x00000000        0x0 kammerton.o
+ .bss           0x00000000        0x0 kammerton.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -43,6 +46,7 @@ Linker script and memory map
 
 Address of section .data set to 0x800100
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
+LOAD kammerton.o
 LOAD main.o
 START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a
@@ -234,16 +238,17 @@ END GROUP
                 0x00000080                . = ALIGN (0x2)
  *(.text.*)
  .text.__vector_1
-                0x00000080       0x1c main.o
+                0x00000080       0x1c kammerton.o
                 0x00000080                __vector_1
  .text.__vector_2
-                0x0000009c       0x1c main.o
+                0x0000009c       0x1c kammerton.o
                 0x0000009c                __vector_2
  .text.__vector_14
-                0x000000b8       0x1e main.o
+                0x000000b8       0x1e kammerton.o
                 0x000000b8                __vector_14
- .text.init     0x000000d6       0x32 main.o
-                0x000000d6                init
+ .text.kammerton
+                0x000000d6       0x32 kammerton.o
+                0x000000d6                kammerton
  .text.main     0x00000108        0x6 main.o
                 0x00000108                main
                 0x0000010e                . = ALIGN (0x2)
@@ -340,8 +345,9 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 main.o
+ .comment       0x00000000       0x30 kammerton.o
                                  0x31 (size before relaxing)
+ .comment       0x00000030       0x31 main.o
 
 .note.gnu.avr.deviceinfo
                 0x00000000       0x40
@@ -363,42 +369,50 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0x40
+.debug_aranges  0x00000000       0x58
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x40 main.o
+                0x00000000       0x38 kammerton.o
+ .debug_aranges
+                0x00000038       0x20 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x6dd
+.debug_info     0x00000000      0x751
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4       0xe9 main.o
+ .debug_info    0x000005f4       0xc5 kammerton.o
+ .debug_info    0x000006b9       0x98 main.o
 
-.debug_abbrev   0x00000000      0x631
+.debug_abbrev   0x00000000      0x673
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_abbrev  0x000005a2       0x8f main.o
+ .debug_abbrev  0x000005a2       0x69 kammerton.o
+ .debug_abbrev  0x0000060b       0x68 main.o
 
-.debug_line     0x00000000      0x274
+.debug_line     0x00000000      0x2b1
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000133      0x141 main.o
+ .debug_line    0x00000133      0x130 kammerton.o
+ .debug_line    0x00000263       0x4e main.o
 
-.debug_frame    0x00000000       0x94
+.debug_frame    0x00000000       0xa8
  *(.debug_frame)
- .debug_frame   0x00000000       0x94 main.o
+ .debug_frame   0x00000000       0x84 kammerton.o
+ .debug_frame   0x00000084       0x24 main.o
 
-.debug_str      0x00000000      0x36f
+.debug_str      0x00000000      0x385
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x167 main.o
-                                0x19b (size before relaxing)
+ .debug_str     0x00000208      0x16c kammerton.o
+                                0x1a0 (size before relaxing)
+ .debug_str     0x00000374       0x11 main.o
+                                0x176 (size before relaxing)
 
 .debug_loc      0x00000000       0xb4
  *(.debug_loc)
- .debug_loc     0x00000000       0xb4 main.o
+ .debug_loc     0x00000000       0xb4 kammerton.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -418,9 +432,10 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x30
+.debug_ranges   0x00000000       0x38
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x30 main.o
+ .debug_ranges  0x00000000       0x28 kammerton.o
+ .debug_ranges  0x00000028       0x10 main.o
 
 .debug_macro
  *(.debug_macro)
