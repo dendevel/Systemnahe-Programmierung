@@ -2,7 +2,7 @@
  * 10BitReadAnalog.c
  *
  * Created: 25.04.2020 14:52:10
- * Author : Denis Dengler, Maximilian Kürschner, David Schader
+ * Author : Denis Dengler, Maximilian KÃ¼rschner, David Schader
  * Description: Read analog value from potentiometer with 10 bit resolution
  */ 
 
@@ -10,7 +10,7 @@
 #include "serial.h"
 
 #include <stdlib.h>
-#include <stdint.h>       		// needed for uint8_t
+#include <stdint.h>       		// needed for uint16_t
 
 #include <avr/interrupt.h>
 
