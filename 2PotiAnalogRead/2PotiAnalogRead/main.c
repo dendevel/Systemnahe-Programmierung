@@ -10,12 +10,12 @@
 #include "serial.h"
 
 #include <stdlib.h>
-#include <stdint.h>					// needed for uint8_t
+#include <stdint.h>					// needed for uint16_t
 
 #include <avr/interrupt.h>
 
 
-volatile uint8_t ADCvalue;    		// Global variable, set to volatile if used with ISR
+volatile uint16_t ADCvalue;    		// Global variable, set to volatile if used with ISR
 
 void echo(){
 	usart_send(usart_receive());
@@ -54,7 +54,7 @@ ISR(ADC_vect)
 	cli();
 	
 	char buffer[10];
-	uint8_t tmp;            // temp register for storage of misc data
+	uint16_t tmp;            // temp register for storage of misc data
 
 	tmp = ADMUX;            // read the value of ADMUX register
 	tmp &= 0x0F;            // AND the first 4 bits (value of ADC pin being used)
