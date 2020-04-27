@@ -13,14 +13,15 @@ void echo(){
 }
 
 
-
 int main( void )
 {
 	usart_init(echo);
 	//test string
 	usart_send_string("hallo_test\n\r");
+	
 	while(1)
-	{                              // Main loop
+	{   
+		// Main loop
 	}
 }
 
