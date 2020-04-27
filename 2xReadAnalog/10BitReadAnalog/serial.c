@@ -6,8 +6,6 @@
  */ 
 #include "serial.h"
 
-typedef void (*func)(void);
-
 func f;
 
 void usart_init(func function){

@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+adc_10_bit.c
+
 main.c
 
 serial.c
