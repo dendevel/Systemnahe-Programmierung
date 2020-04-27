@@ -9,8 +9,9 @@
 
 #ifndef TRAFFICCONTROL_H
 #define TRAFFICCONTROL_H
-
 #define F_CPU 16000000UL
+
+/* includes */
 #include <avr/io.h>
 #include <util/delay.h>
 #include "bitcontrol.h"

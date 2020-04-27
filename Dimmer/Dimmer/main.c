@@ -6,9 +6,11 @@
  * Description: pulsating led
  */ 
 
+/* includes */
 #include <avr/io.h>
 #include "dimmer.h"
 
+/* function implementations */
 void init(void){
 	// PD6 is now an output
 	DDRD |= (1 << DDD6);

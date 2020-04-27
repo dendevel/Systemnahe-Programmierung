@@ -7,9 +7,11 @@
  * Description: program to light up several count of LEDs in a row successively. If end reached, direction is changed.
  */ 
 
+/* includes */
 #include <avr/io.h>
 #include "lauflicht.h"
 
+/* function implementations */
 void init() {
 	// set pins PB0-PB5 as output
 	DDRB = 0b00111111;

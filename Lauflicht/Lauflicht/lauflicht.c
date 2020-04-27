@@ -5,8 +5,8 @@
  * Author: Denis Dengler, Maximilian Kürschner, David Schader
  */ 
 
+/* includes */
 #include "lauflicht.h"
-#include <stdio.h>
 
 //first 6 pins on PortB (index <= 5)
 //next 6 pins on PortC (index >= 6)

@@ -35,7 +35,6 @@ int main(void)
 	}
 }
 
-
 ISR(ADC_vect)
 {
 	cli();

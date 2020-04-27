@@ -11,13 +11,13 @@
 
 /* includes */
 #include <avr/io.h>
-#include <stdint.h>							            // needed for uint8_t
+#include <stdint.h>							        // needed for uint8_t
 #include <avr/interrupt.h>
 
 /* constants and typedefs */
-#define FOSC 16000000                       // Clock Speed
+#define FOSC 16000000								// Clock Speed
 #define BAUD 9600
-#define MYUBRR FOSC/16/BAUD -1				      // Transmittin Speed
+#define MYUBRR FOSC/16/BAUD -1						// Transmitting Speed
 
 typedef void (*func)(void);
 

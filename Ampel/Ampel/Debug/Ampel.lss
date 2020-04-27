@@ -101,9 +101,9 @@ void mainloop(){
   90:	fd cf       	rjmp	.-6      	; 0x8c <main+0x4>
 
 00000092 <reset_all>:
-
 #include "trafficcontrol.h"
 
+/* function implementations */
 void reset_all(void){
 	//set all pins to LOW
 	CLEAR_BIT(PORTB, RED);

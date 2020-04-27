@@ -7,8 +7,10 @@
  * Description: Implementation of traffic light functions
  */ 
 
+/* includes */
 #include "trafficcontrol.h"
 
+/* function implementations */
 void reset_all(void){
 	//set all pins to LOW
 	CLEAR_BIT(PORTB, RED);

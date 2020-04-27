@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  000000a8  00000000  00000000  00001838  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000401  00000000  00000000  000018e0  2**0
+ 10 .debug_str    000003ec  00000000  00000000  000018e0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000286  00000000  00000000  00001ce1  2**0
+ 11 .debug_loc    00000286  00000000  00000000  00001ccc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000040  00000000  00000000  00001f67  2**0
+ 12 .debug_ranges 00000040  00000000  00000000  00001f52  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -146,26 +146,26 @@ void setPin(int pinIndex){
   e2:	48 b9       	out	0x08, r20	; 8
   e4:	08 95       	ret
 
-000000e6 <orPin>:
+000000e6 <addPin>:
 
 //activate pin on specific port
 //first 6 pins on PortB (index <= 5)
 //next 6 pins on PortC (index >= 6)
-void orPin(int pinIndex){
+void addPin(int pinIndex){
 	if(pinIndex >= 0 && pinIndex <= 5){
   e6:	86 30       	cpi	r24, 0x06	; 6
   e8:	91 05       	cpc	r25, r1
-  ea:	68 f4       	brcc	.+26     	; 0x106 <orPin+0x20>
+  ea:	68 f4       	brcc	.+26     	; 0x106 <addPin+0x20>
 		PORTB |= (1 << pinIndex);
   ec:	45 b1       	in	r20, 0x05	; 5
   ee:	21 e0       	ldi	r18, 0x01	; 1
   f0:	30 e0       	ldi	r19, 0x00	; 0
   f2:	b9 01       	movw	r22, r18
-  f4:	02 c0       	rjmp	.+4      	; 0xfa <orPin+0x14>
+  f4:	02 c0       	rjmp	.+4      	; 0xfa <addPin+0x14>
   f6:	66 0f       	add	r22, r22
   f8:	77 1f       	adc	r23, r23
   fa:	8a 95       	dec	r24
-  fc:	e2 f7       	brpl	.-8      	; 0xf6 <orPin+0x10>
+  fc:	e2 f7       	brpl	.-8      	; 0xf6 <addPin+0x10>
   fe:	cb 01       	movw	r24, r22
  100:	84 2b       	or	r24, r20
  102:	85 b9       	out	0x05, r24	; 5
@@ -177,18 +177,18 @@ void orPin(int pinIndex){
  10a:	31 09       	sbc	r19, r1
  10c:	26 30       	cpi	r18, 0x06	; 6
  10e:	31 05       	cpc	r19, r1
- 110:	68 f4       	brcc	.+26     	; 0x12c <orPin+0x46>
+ 110:	68 f4       	brcc	.+26     	; 0x12c <addPin+0x46>
 		PORTC |= (1 << (pinIndex - 6));
  112:	48 b1       	in	r20, 0x08	; 8
  114:	c9 01       	movw	r24, r18
  116:	21 e0       	ldi	r18, 0x01	; 1
  118:	30 e0       	ldi	r19, 0x00	; 0
  11a:	b9 01       	movw	r22, r18
- 11c:	02 c0       	rjmp	.+4      	; 0x122 <orPin+0x3c>
+ 11c:	02 c0       	rjmp	.+4      	; 0x122 <addPin+0x3c>
  11e:	66 0f       	add	r22, r22
  120:	77 1f       	adc	r23, r23
  122:	8a 95       	dec	r24
- 124:	e2 f7       	brpl	.-8      	; 0x11e <orPin+0x38>
+ 124:	e2 f7       	brpl	.-8      	; 0x11e <addPin+0x38>
  126:	cb 01       	movw	r24, r22
  128:	84 2b       	or	r24, r20
  12a:	88 b9       	out	0x08, r24	; 8
@@ -198,7 +198,7 @@ void orPin(int pinIndex){
 	}
 }
 
-void setMultiplePins(int pinIndex, int leds){
+void setMultiplePins(int pinIndex, int ledCount){
  12e:	ef 92       	push	r14
  130:	ff 92       	push	r15
  132:	0f 93       	push	r16
@@ -210,7 +210,7 @@ void setMultiplePins(int pinIndex, int leds){
 	setPin(pinIndex);
  13e:	0e 94 53 00 	call	0xa6	; 0xa6 <setPin>
 	int pin = 1;
-	while (pin != leds)
+	while (pin != ledCount)
  142:	81 e0       	ldi	r24, 0x01	; 1
  144:	e8 16       	cp	r14, r24
  146:	f1 04       	cpc	r15, r1
@@ -218,24 +218,24 @@ void setMultiplePins(int pinIndex, int leds){
  14a:	c1 e0       	ldi	r28, 0x01	; 1
  14c:	d0 e0       	ldi	r29, 0x00	; 0
 	{	
-		orPin(pinIndex + pin);	
+		addPin(pinIndex + pin);	
  14e:	c8 01       	movw	r24, r16
  150:	8c 0f       	add	r24, r28
  152:	9d 1f       	adc	r25, r29
- 154:	0e 94 73 00 	call	0xe6	; 0xe6 <orPin>
+ 154:	0e 94 73 00 	call	0xe6	; 0xe6 <addPin>
 		pin += 1;
  158:	21 96       	adiw	r28, 0x01	; 1
 }
 
-void setMultiplePins(int pinIndex, int leds){
+void setMultiplePins(int pinIndex, int ledCount){
 	setPin(pinIndex);
 	int pin = 1;
-	while (pin != leds)
+	while (pin != ledCount)
  15a:	ec 16       	cp	r14, r28
  15c:	fd 06       	cpc	r15, r29
  15e:	b9 f7       	brne	.-18     	; 0x14e <setMultiplePins+0x20>
 	{	
-		orPin(pinIndex + pin);	
+		addPin(pinIndex + pin);	
 		pin += 1;
 	}
 }
@@ -252,10 +252,10 @@ void setMultiplePins(int pinIndex, int leds){
 //LEDs
 //1-6 on PortB
 //7-10 on PortC
-void lightStep(int min, int max, int leds){
+void lightStep(int min, int max, int ledCount){
  16e:	fc 01       	movw	r30, r24
 	//get the max determined by amount of leds
-	max = max - (leds - 1);
+	max = max - (ledCount - 1);
 	
 	//set light direction
 	//if maximum or minimum reached, change direction, else keep 
@@ -293,7 +293,7 @@ void lightStep(int min, int max, int leds){
  1be:	30 91 01 01 	lds	r19, 0x0101	; 0x800101 <__data_start+0x1>
  1c2:	30 93 01 01 	sts	0x0101, r19	; 0x800101 <__data_start+0x1>
  1c6:	20 93 00 01 	sts	0x0100, r18	; 0x800100 <__data_start>
-	setMultiplePins(pin, leds);
+	setMultiplePins(pin, ledCount);
  1ca:	ba 01       	movw	r22, r20
  1cc:	0e 94 97 00 	call	0x12e	; 0x12e <setMultiplePins>
 	#else
@@ -324,9 +324,9 @@ void lightStep(int min, int max, int leds){
  1fe:	08 95       	ret
 
 00000200 <init>:
-#include <avr/io.h>
 #include "lauflicht.h"
 
+/* function implementations */
 void init() {
 	// set pins PB0-PB5 as output
 	DDRB = 0b00111111;
@@ -338,7 +338,6 @@ void init() {
  206:	08 95       	ret
 
 00000208 <main>:
-	
 }
 
 int main(void)

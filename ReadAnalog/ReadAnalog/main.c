@@ -6,6 +6,7 @@
  * Description: Read value from potentiometer and print in serial monitor
  */ 
 
+/* includes */
 #include <avr/io.h>
 #include "serial.h"
 #include "adc.h"
@@ -15,11 +16,24 @@
 
 #include <avr/interrupt.h>
 
-
+/* global variables */
 volatile uint8_t ADCvalue;    		// Global variable, set to volatile if used with ISR
 
+/* function implementations */
 void echo(){
 	usart_send(usart_receive());
+}
+
+ISR(ADC_vect)
+{
+	cli();
+	ADCvalue = ADCH;			// only need to read the high value for 8 bit
+	
+	char buffer [10];
+	itoa(ADCvalue, buffer, 10);
+	usart_send_string(buffer);
+	usart_send_string("\n\r");
+	sei();
 }
 
 int main(void)
@@ -34,16 +48,4 @@ int main(void)
 	}
 }
 
-
-ISR(ADC_vect)
-{
-	cli();
-	ADCvalue = ADCH;			// only need to read the high value for 8 bit
-	
-	char buffer [10];
-	itoa(ADCvalue, buffer, 10);
-	usart_send_string(buffer);
-	usart_send_string("\n\r");
-	sei();
-}
 

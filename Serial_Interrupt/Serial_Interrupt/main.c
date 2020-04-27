@@ -6,8 +6,10 @@
  * Description: Using serial pins for echo function
  */ 
 
+/* includes */
 #include "serial.h"
 
+/* function implementations */
 void echo(){
 	usart_send(usart_receive());
 }

@@ -161,17 +161,17 @@ void pulseStep(int min, int max){
  11e:	08 95       	ret
 
 00000120 <init>:
-#include <avr/io.h>
 #include "dimmer.h"
 
+/* function implementations */
 void init(void){
 	// PD6 is now an output
 	DDRD |= (1 << DDD6);
  120:	56 9a       	sbi	0x0a, 6	; 10
 
 	// set PWM for 100% duty cycle
-	OCR0A = 64;
- 122:	80 e4       	ldi	r24, 0x40	; 64
+	OCR0A = 255;
+ 122:	8f ef       	ldi	r24, 0xFF	; 255
  124:	87 bd       	out	0x27, r24	; 39
 
 	// set none-inverting mode
@@ -204,8 +204,8 @@ int main(void)
 	
 	while (1)
 	{
-		pulseStep(0,64);
- 13e:	60 e4       	ldi	r22, 0x40	; 64
+		pulseStep(0,255);
+ 13e:	6f ef       	ldi	r22, 0xFF	; 255
  140:	70 e0       	ldi	r23, 0x00	; 0
  142:	80 e0       	ldi	r24, 0x00	; 0
  144:	90 e0       	ldi	r25, 0x00	; 0
