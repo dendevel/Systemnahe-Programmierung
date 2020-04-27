@@ -120,12 +120,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="adc_10_bit.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="adc_10_bit.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>

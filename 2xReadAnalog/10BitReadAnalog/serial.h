@@ -17,8 +17,6 @@
 #define BAUD 9600
 #define MYUBRR FOSC/16/BAUD -1
 
-typedef void (*func)(void);
-
 void usart_init(void (*fun)());
 void usart_send(uint8_t toSend);
 void usart_send_string(char *data);
