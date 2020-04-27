@@ -6,6 +6,7 @@
  * Description: Read analog value from potentiometer with 10 bit resolution
  */ 
 
+/* includes */
 #include <avr/io.h>
 #include "serial.h"
 #include "adc.h"
@@ -15,8 +16,8 @@
 
 #include <avr/interrupt.h>
 
-
-volatile uint16_t ADCvalue;    		// Global variable, set to volatile if used with ISR
+/* global variables */
+volatile uint16_t ADCvalue;    			// Global variable, set to volatile if used with ISR
 
 void echo(){
 	usart_send(usart_receive());
