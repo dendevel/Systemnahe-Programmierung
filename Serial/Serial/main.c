@@ -32,6 +32,8 @@ int main( void )
 {
 	while(1)
 	{
+		init(); 
+		
 		//The RXC(RXCn) bit (Receive Complete) will be set to HIGH(1) when data has been received and is available in the UDR (UDR0) buffer. 
 		while ( !(UCSR0A & (1 << RXC0)) ){}		// Wait until data is received
 		
